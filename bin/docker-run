@@ -1,0 +1,12 @@
+#/bin/bash
+
+if [ -z "$TAG" ]; then
+  TAG="latest"
+fi
+
+docker run \
+  --interactive \
+  --publish 5000:5000 \
+  --rm \
+  --tty \
+  "hello-full-stack:$TAG"
