@@ -9,6 +9,7 @@ Currently included are:
   - [uwsgi][uwsgi-docs] for the application server
   - [asyncio][asyncio-docs] for async
 - A [Dockerfile][docker-getting-started] enabling a variety of container fun
+- A GitHub action that builds the Dockerfile and pushes the resulting image to AWS ECR
 
 [asyncio-docs]: https://docs.python.org/3/library/asyncio.html "asyncio — Asynchronous I/O"
 [docker-getting-started]: https://docs.docker.com/get-started/ "Docker - Get Started"

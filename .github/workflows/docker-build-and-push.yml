@@ -1,0 +1,39 @@
+name: Build and push Docker image
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  docker-build-and-push:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    # Permissions needed to get ID token for OIDC auth
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS ECR credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          # Uses Github OIDC Provider to authenticate and assume the
+          # prod-cicd-automation role
+          role-to-assume: arn:aws:iam::498127099666:role/prod-cicd-automation
+          role-session-name: prod-cicd-automation-github-actions
+
+      - id: login-ecr
+        name: Login to AWS ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to AWS ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: hello-full-stack
+        run: |
+          docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA" .
+          docker push --all-tags "$ECR_REGISTRY/$ECR_REPOSITORY"
