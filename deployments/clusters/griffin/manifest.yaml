@@ -1,0 +1,173 @@
+---
+# Create a namespace to deploy resources into.
+#
+# Namespaces provide a mechanism for isolating groups of resources within a single cluster.
+# https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/name: hello-full-stack
+    app.kubernetes.io/instance: hello-full-stack
+    app.kubernetes.io/version: 1.0.0
+  name: hello-full-stack
+---
+# Create a service account for the pod(s) to use
+#
+# A service account provides an identity for processes that run in a pod
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/name: hello-full-stack
+    app.kubernetes.io/instance: hello-full-stack
+    app.kubernetes.io/version: 1.0.0
+  name: hello-full-stack
+  namespace: hello-full-stack
+---
+# Create a ClusterIP service to expose the pod(s) as a network service internal
+# to the cluster.
+#
+# A service is an abstract way to expose an application running on a set of
+# Pods as a network service.
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-full-stack-service
+    app.kubernetes.io/name: hello-full-stack
+    app.kubernetes.io/instance: hello-full-stack
+    app.kubernetes.io/version: 1.0.0
+  name: hello-full-stack
+  namespace: hello-full-stack
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: hello-full-stack
+    app.kubernetes.io/instance: hello-full-stack
+---
+# Create a deployment that will run 2 replicas of the hello-full-stack
+# container.
+#
+# A deployment is a description of a desired state that the Deployment
+# Controller tries to make that description a reality at a controller rate.
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: hello-full-stack
+    app.kubernetes.io/instance: hello-full-stack
+    app.kubernetes.io/version: 1.0.0
+  name: hello-full-stack
+  namespace: hello-full-stack
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hello-full-stack
+      app.kubernetes.io/instance: hello-full-stack
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hello-full-stack
+        app.kubernetes.io/instance: hello-full-stack
+    spec:
+      serviceAccountName: hello-full-stack
+      containers:
+        - name: hello-full-stack
+          image: 498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          env:
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: KUBERNETES_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: CONTAINER_IMAGE
+            value: 498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack:latest
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/os: linux
+---
+# Create an ingress to allow external access to the hello-full-stack service.
+#
+# An Ingress is an API object that manages external access to the services in a
+# cluster, typically HTTP.
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: hello-full-stack
+  namespace: hello-full-stack
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /hello-full-stack(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: hello-full-stack
+            port:
+              number: 80
+---
+# Create a LoadBalancer service to expose the pod(s) as a network service internal to the
+# cluster that is also associated with an external elastic load balancer.
+#
+# A service is an abstract way to expose an application running on a set of
+# Pods as a network service.
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-full-stack-nginx-ingress
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/version: 1.0.0
+    component: controller
+  name: hello-full-stack-nginx-ingress-controller
+  namespace: hello-full-stack
+spec:
+  externalTrafficPolicy: Local
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - appProtocol: http
+    name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: hello-full-stack-service
+  type: LoadBalancer
