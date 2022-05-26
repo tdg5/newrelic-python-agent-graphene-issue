@@ -84,7 +84,7 @@ spec:
       containers:
         - name: hello-full-stack
           image: 498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8000
