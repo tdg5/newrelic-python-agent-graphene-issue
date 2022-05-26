@@ -1,17 +1,8 @@
-from flask import Flask
-import asyncio
+from fastapi import FastAPI
 
-RESPONSE_HTML = "<p>Hello, Full Stack!</p>"
-
-app = Flask("Hello Full Stack")
+app = FastAPI()
 
 
-@app.route("/")
-def hello_full_stack():
-    return RESPONSE_HTML
-
-
-@app.route("/async")
-async def hello_full_stack_async():
-    await asyncio.sleep(1)
-    return RESPONSE_HTML
+@app.get("/")
+async def hello_full_stack():
+    return {"message": "Hello, Full Stack!"}

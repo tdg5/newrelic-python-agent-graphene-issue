@@ -6,7 +6,7 @@ fi
 
 docker run \
   --interactive \
-  --publish 5000:5000 \
+  --publish 8000:8000 \
   --rm \
   --tty \
   "hello-full-stack:$TAG"

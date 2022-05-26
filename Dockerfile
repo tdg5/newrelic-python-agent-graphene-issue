@@ -6,10 +6,12 @@ WORKDIR /app
 
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
+COPY ./hypercorn_conf.py /tmp/hypercorn_conf.py
+
 COPY src /app
 
 ENV PYTHONPATH=/app
 
-ENTRYPOINT ["uwsgi"]
+ENTRYPOINT ["hypercorn"]
 
-CMD ["--yaml", "/app/uwsgi.yaml"]
+CMD ["--config", "file:/tmp/hypercorn_conf.py", "entry:app"]
