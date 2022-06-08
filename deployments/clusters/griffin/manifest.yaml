@@ -130,6 +130,7 @@ metadata:
   name: hello-full-stack
   namespace: hello-full-stack
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
