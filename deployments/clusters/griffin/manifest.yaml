@@ -127,7 +127,7 @@ metadata:
   name: hello-full-stack
   namespace: hello-full-stack
 spec:
-  ingressClassName: nginx
+  ingressClassName: internal-nginx
   rules:
   - http:
       paths:
