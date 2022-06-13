@@ -1,4 +1,4 @@
-name: Build and push Docker image
+name: Build and push Docker image and update manifests to refer to new image
 
 on:
   push:
@@ -37,3 +37,38 @@ jobs:
         run: |
           docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA" .
           docker push --all-tags "$ECR_REGISTRY/$ECR_REPOSITORY"
+  update-image-refs:
+    name: Update base manifest image to point to new docker image.
+    needs:
+      - docker-build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out hello-full-stack
+        uses: actions/checkout@v3
+        with:
+          path: hello-full-stack
+
+      - name: Checkout private NM github-actions
+        uses: actions/checkout@v3
+        with:
+          repository: neuralmagic/github-actions
+          ref: v0.1.0
+          path: .github/actions/nm-github-actions
+          token: ${{ secrets.DANNY_GITHUB_PAT }}
+
+      - name: Install kustomize
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+
+      - name: Update base manifest image to point to new docker image
+        run: |-
+          cd hello-full-stack/deployments/clusters/base
+          kustomize edit set image "498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack:${GITHUB_SHA}"
+
+      - name: Run private NM action
+        uses: ./.github/actions/nm-github-actions/packages/stage-commit-and-push-action/src
+        with:
+          commitMessage: '[skip actions] Update base deployment image references'
+          # Look out! This is a string literal list of file paths since Github actions don't have a list input type
+          filePaths: |-
+            ./deployments/clusters/base/kustomization.yaml
+          repoPath: hello-full-stack

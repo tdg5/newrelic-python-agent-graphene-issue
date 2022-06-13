@@ -1,0 +1,7 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: hello-full-stack.griffin.internal.neuralmagic.com
+  name: hello-full-stack
+  namespace: hello-full-stack
