@@ -54,7 +54,7 @@ jobs:
           repository: neuralmagic/github-actions
           ref: v0.1.0
           path: .github/actions/nm-github-actions
-          token: ${{ secrets.DANNY_GITHUB_PAT }}
+          token: ${{ secrets.CICD_GITHUB_PAT }}
 
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
