@@ -67,7 +67,7 @@ setup(
     version="1.0",
     author="Neuralmagic, Inc.",
     author_email="support@neuralmagic.com",
-    description=("Benchmark service."),
+    description=("Fullstack example and template repo."),
     long_description=_setup_long_description()[0],
     long_description_content_type=_setup_long_description()[1],
     keywords="[TODO]",
