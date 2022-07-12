@@ -1,11 +1,17 @@
 name: Quality Checks
-on: [push]
+on:
+  push:
+    # Only run these quality checks for non-main branches. Quality checks for
+    # main are run elsewhere.
+    branches-ignore: [main]
 jobs:
   quality-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: "⚙️ Install dependencies"
-        run: pip3 install .[dev]
+        run: pip3 install .[all]
       - name: "🧹 Running quality checks"
-        run: make quality
+        run: |
+          make quality
+          python -m pytest

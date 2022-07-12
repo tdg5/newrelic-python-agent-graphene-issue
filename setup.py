@@ -51,7 +51,11 @@ def _setup_packages() -> List:
 
 
 def _setup_extras() -> Dict:
-    return {"dev": _dev_deps, "deps": _deps, "all": [_dev_deps, _deps]}
+    return {
+        "all": [_dev_deps, _deps],
+        "deps": _deps,
+        "dev": _dev_deps,
+    }
 
 
 def _setup_install_requires() -> List:
