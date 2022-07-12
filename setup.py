@@ -12,16 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from os import path
 from typing import Dict, List, Tuple
 
 from setuptools import find_packages, setup
 
+VERSION_PATH = path.join(path.abspath(path.dirname(__file__)), "VERSION")
+
+with open(VERSION_PATH, encoding="utf-8", mode="r") as f:
+    VERSION = f.read().strip()
 
 _deps = [
     "fastapi",
     "hypercorn",
 ]
-
 
 _dev_deps = [
     "awscli>=1.19.24",
@@ -64,7 +68,7 @@ def _setup_long_description() -> Tuple[str, str]:
 
 setup(
     name="hello-full-stack",
-    version="1.0",
+    version=VERSION,
     author="Neuralmagic, Inc.",
     author_email="support@neuralmagic.com",
     description=("Fullstack example and template repo."),

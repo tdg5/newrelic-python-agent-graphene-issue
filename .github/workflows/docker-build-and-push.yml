@@ -72,3 +72,29 @@ jobs:
           filePaths: |-
             ./deployments/clusters/base/kustomization.yaml
           repoPath: hello-full-stack
+  increment-version:
+    name: Increment the package version
+    needs:
+      - update-image-refs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          path: hello-full-stack
+
+      - name: Checkout private NM github-actions
+        uses: actions/checkout@v3
+        with:
+          repository: neuralmagic/github-actions
+          ref: v0.2.5
+          path: .github/actions/nm-github-actions
+          token: ${{ secrets.CICD_GITHUB_PAT }}
+
+      - name: Update version
+        uses: ./.github/actions/nm-github-actions/packages/increment-version-action/src
+        with:
+          commitMessage: '[skip actions] Increment version for next development cycle.'
+          versionFilePath: VERSION
+          versionFormat: python
+          repoPath: hello-full-stack
