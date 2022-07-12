@@ -14,4 +14,4 @@ ENV PYTHONPATH=/app
 
 ENTRYPOINT ["hypercorn"]
 
-CMD ["--config", "file:/tmp/hypercorn_conf.py", "entry:app"]
+CMD ["--config", "file:/tmp/hypercorn_conf.py", "hello_full_stack.entry:app"]

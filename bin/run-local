@@ -16,4 +16,4 @@ get_repo_dir () {
 
 REPO_DIR=$(get_repo_dir)
 
-hypercorn -c "file:$REPO_DIR/hypercorn_conf.py" "$REPO_DIR/src/entry.py"
+hypercorn -c "file:$REPO_DIR/hypercorn_conf.py" "$REPO_DIR/src/hello_full_stack/entry.py"

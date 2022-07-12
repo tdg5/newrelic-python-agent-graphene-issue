@@ -45,7 +45,7 @@ _dev_deps = [
 def _setup_packages() -> List:
     return find_packages(
         "src",
-        include=[],
+        include=["hello_full_stack"],
         exclude=["*.__pycache__.*"],
     )
 
