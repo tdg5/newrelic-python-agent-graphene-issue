@@ -17,6 +17,7 @@ from typing import Dict, List, Tuple
 
 from setuptools import find_packages, setup
 
+
 VERSION_PATH = path.join(path.abspath(path.dirname(__file__)), "VERSION")
 
 with open(VERSION_PATH, encoding="utf-8", mode="r") as f:
