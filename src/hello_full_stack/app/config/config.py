@@ -6,7 +6,6 @@ import os
 from typing import Any, Dict, Tuple
 
 import yaml
-
 from pydantic import BaseSettings
 from pydantic.env_settings import SettingsSourceCallable
 

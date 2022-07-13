@@ -3,14 +3,11 @@ Bootloader module managing the lifetime of the singleton app instance,
 including initialization.
 """
 
-from typing import Dict, List
 from threading import Lock
+from typing import Dict, List
 
 from hello_full_stack.app import App
-from hello_full_stack.app.initializers import (
-    AbstractInitializer,
-    INITIALIZERS,
-)
+from hello_full_stack.app.initializers import INITIALIZERS, AbstractInitializer
 
 
 _SINGLETON: App = None
@@ -41,6 +38,4 @@ def _execute_all_initializers(
     :param app: The app instance that should be given to the initializers.
     :param initializers: The initializers that should be executed.
     """
-    return [
-        initializer.execute(app) for initializer in initializers
-    ]
+    return [initializer.execute(app) for initializer in initializers]

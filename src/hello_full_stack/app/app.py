@@ -7,8 +7,8 @@ purposes.
 """
 
 from fastapi import FastAPI
-from typing import Optional
 from hello_full_stack.app.config import Config
+
 
 class App:
     """
@@ -43,4 +43,3 @@ class App:
     @config.setter
     def config(self, config: Config) -> None:
         self._config = config
-

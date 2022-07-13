@@ -2,13 +2,11 @@
 Export an ordered list of all the app initializers.
 """
 
-from typing import Dict, List
-
-from hello_full_stack.app import App
+from typing import List
 
 from .abstract_initializer import AbstractInitializer
-from .config_initializer import ConfigInitializer
 from .api_initializer import ApiInitializer
+from .config_initializer import ConfigInitializer
 
 
 __all__ = [
