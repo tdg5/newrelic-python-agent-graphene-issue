@@ -11,6 +11,7 @@ charset-normalizer==2.1.0
 click==8.0.4
 colorama==0.4.4
 commonmark==0.9.1
+Deprecated==1.2.13
 docutils==0.16
 fastapi==0.78.0
 flake8==3.9.2
@@ -56,6 +57,7 @@ rinoh-typeface-texgyrepagella==0.1.1
 rinohtype==0.4.2
 rsa==4.7.2
 s3transfer==0.6.0
+semver==2.13.0
 six==1.16.0
 sniffio==1.2.0
 snowballstemmer==2.2.0
@@ -69,6 +71,8 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 starlette==0.19.1
 toml==0.10.2
+types-Deprecated==1.2.9
 typing_extensions==4.3.0
 urllib3==1.26.10
+wrapt==1.14.1
 wsproto==1.1.0

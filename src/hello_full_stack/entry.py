@@ -17,16 +17,20 @@ Example/template implementation of an API microservice.
 """
 
 
+from hello_full_stack.app import App
+from hello_full_stack.app.bootloader import boot
 from fastapi import FastAPI
 
 
-app = FastAPI(
-    description=__doc__,
-    title="hello-full-stack",
-)
+app: App = boot()
+api: FastAPI = app.api
 
 
-@app.get("/")
+@api.get("/")
 async def hello_full_stack():
     """Minimal example GET endpoint."""
-    return {"message": "Hello, Full Stack!"}
+    return {
+        "message": app.config.message,
+        "name": app.config.name,
+        "version": app.config.version,
+    }

@@ -24,8 +24,9 @@ with open(VERSION_PATH, encoding="utf-8", mode="r") as f:
     VERSION = f.read().strip()
 
 _deps = [
-    "fastapi",
-    "hypercorn",
+    "fastapi==0.78.0",
+    "hypercorn==0.13.2",
+    "pydantic==1.9.1",
 ]
 
 _dev_deps = [
