@@ -6,7 +6,8 @@ including initialization.
 from threading import Lock
 from typing import Dict, List, Optional
 
-from hello_full_stack.app import App, Config
+from hello_full_stack.app import App
+from hello_full_stack.app.config import Config
 from hello_full_stack.app.initializers import INITIALIZERS, AbstractInitializer
 
 

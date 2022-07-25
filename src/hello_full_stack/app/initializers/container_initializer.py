@@ -4,7 +4,8 @@ Initializer that sets up the application's root dependency injector container.
 
 from typing import Dict
 
-from hello_full_stack.app import App, RootContainer
+from hello_full_stack.app import App
+from hello_full_stack.app.containers.root_container import RootContainer
 
 from .abstract_initializer import AbstractInitializer
 
