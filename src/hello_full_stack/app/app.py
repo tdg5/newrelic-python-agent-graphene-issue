@@ -6,6 +6,8 @@ Typically, a singleton is used, but other instances can be created for testing
 purposes.
 """
 
+from typing import Optional, cast
+
 from fastapi import FastAPI
 from hello_full_stack.app.config import Config
 
@@ -15,8 +17,8 @@ class App:
     An instance of the App.
     """
 
-    _api: FastAPI = None
-    _config: Config = None
+    _api: Optional[FastAPI]
+    _config: Optional[Config]
 
     def __init__(self):
         self._api = None
@@ -27,7 +29,7 @@ class App:
         """
         Return the API instance for the app.
         """
-        return self._api
+        return cast(FastAPI, self._api)
 
     @api.setter
     def api(self, api: FastAPI) -> None:
@@ -38,7 +40,7 @@ class App:
         """
         Return the Config instance for the app.
         """
-        return self._config
+        return cast(Config, self._config)
 
     @config.setter
     def config(self, config: Config) -> None:

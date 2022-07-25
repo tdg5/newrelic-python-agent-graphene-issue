@@ -11,7 +11,8 @@ from pydantic.env_settings import SettingsSourceCallable
 
 
 def yaml_config_settings_source(settings: BaseSettings) -> Dict[str, Any]:
-    yaml_config_path = settings.__config__.yaml_config_path
+    config = settings.__config__
+    yaml_config_path = config.yaml_config_path  # type: ignore[attr-defined]
     if yaml_config_path is None or not os.path.exists(yaml_config_path):
         return {}
     with open(yaml_config_path, mode="r", encoding="utf-8") as stream:

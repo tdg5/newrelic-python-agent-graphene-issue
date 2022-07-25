@@ -13,20 +13,18 @@ _deps = [
     "fastapi==0.78.0",
     "hypercorn==0.13.2",
     "pydantic==1.9.1",
+    "PyYaml>=~6.0",
 ]
 
 _dev_deps = [
-    "awscli>=1.19.24",
     "black==21.5b2",
+    "click<8.1",
     "flake8==3.9.2",
     "isort==5.8.0",
-    "rinohtype~=0.4.2",
-    "sphinxcontrib-apidoc~=0.3.0",
-    "wheel>=0.36.2",
-    "pypiserver>=1.4.2",
+    "mypy~=0.971",
     "pytest~=6.2.0",
-    "pytest-mock~=3.6.0",
-    "click<8.1",
+    "types-PyYaml~=6.0",
+    "wheel>=0.36.2",
 ]
 
 

@@ -4,13 +4,13 @@ including initialization.
 """
 
 from threading import Lock
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from hello_full_stack.app import App
 from hello_full_stack.app.initializers import INITIALIZERS, AbstractInitializer
 
 
-_SINGLETON: App = None
+_SINGLETON: Optional[App] = None
 _LOCK: Lock = Lock()
 
 
