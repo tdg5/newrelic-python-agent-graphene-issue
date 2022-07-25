@@ -9,7 +9,9 @@ purposes.
 from typing import Optional, cast
 
 from fastapi import FastAPI
+
 from hello_full_stack.app.config import Config
+from hello_full_stack.app.containers import RootContainer
 
 
 class App:
@@ -18,11 +20,12 @@ class App:
     """
 
     _api: Optional[FastAPI]
-    _config: Optional[Config]
+    _container: Optional[RootContainer]
+    config: Config
 
-    def __init__(self):
+    def __init__(self, config: Config):
         self._api = None
-        self._config = None
+        self.config = config
 
     @property
     def api(self) -> FastAPI:
@@ -36,12 +39,12 @@ class App:
         self._api = api
 
     @property
-    def config(self) -> Config:
+    def container(self) -> Optional[RootContainer]:
         """
-        Return the Config instance for the app.
+        Return the RootContainer instance for the app.
         """
-        return cast(Config, self._config)
+        return self._container
 
-    @config.setter
-    def config(self, config: Config) -> None:
-        self._config = config
+    @container.setter
+    def container(self, root_container: RootContainer) -> None:
+        self._container = root_container

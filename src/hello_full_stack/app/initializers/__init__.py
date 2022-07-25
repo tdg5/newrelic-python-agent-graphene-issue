@@ -6,7 +6,7 @@ from typing import List
 
 from .abstract_initializer import AbstractInitializer
 from .api_initializer import ApiInitializer
-from .config_initializer import ConfigInitializer
+from .container_initializer import ContainerInitializer
 
 
 __all__ = [
@@ -16,6 +16,6 @@ __all__ = [
 
 # Order is important! Initializers are executed in the order defined below.
 INITIALIZERS: List[AbstractInitializer] = [
-    ConfigInitializer,
+    ContainerInitializer,
     ApiInitializer,
 ]

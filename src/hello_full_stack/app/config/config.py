@@ -3,21 +3,13 @@ Config for the application.
 """
 
 import os
-from typing import Any, Dict, Tuple
+from typing import Optional, Tuple
 
-import yaml
-from pydantic import BaseSettings
+from pydantic import BaseSettings, validator
 from pydantic.env_settings import SettingsSourceCallable
 
-
-def yaml_config_settings_source(settings: BaseSettings) -> Dict[str, Any]:
-    config = settings.__config__
-    yaml_config_path = config.yaml_config_path  # type: ignore[attr-defined]
-    if yaml_config_path is None or not os.path.exists(yaml_config_path):
-        return {}
-    with open(yaml_config_path, mode="r", encoding="utf-8") as stream:
-        yaml_config = yaml.safe_load(stream)
-    return yaml_config
+from nm_toolkit.deploy_env import DeployEnv, Stage, Vendor  # type: ignore[import]
+from nm_toolkit.pydantic import YamlConfigSettingsSource  # type: ignore[import]
 
 
 class Config(BaseSettings):
@@ -25,9 +17,63 @@ class Config(BaseSettings):
     Config for the application.
     """
 
+    _deploy_env: DeployEnv
+
+    git_sha: str
     message: str
     name: str
+    region: str
+    stage: Stage
+    vendor: Vendor
     version: str
+
+    yaml_config_path: Optional[str]
+
+    def __init__(self, *args, **kwargs):
+        # Allow the secrets dir to be provided as an environment var
+        if "_secrets_dir" not in kwargs:
+            secrets_dir_from_env = os.getenv(
+                f"{self.__config__.env_prefix}SECRETS_DIR_PATH",
+                None,
+            )
+            if secrets_dir_from_env:
+                kwargs["_secrets_dir"] = secrets_dir_from_env
+
+        # Allow the yaml config path to be provided as an environment var
+        if "yaml_config_path" not in kwargs:
+            yaml_config_path_from_env = os.getenv(
+                f"{self.__config__.env_prefix}YAML_CONFIG_PATH",
+                None,
+            )
+            if yaml_config_path_from_env:
+                kwargs["yaml_config_path"] = yaml_config_path_from_env
+
+        super().__init__(*args, **kwargs)
+
+        deploy_env = DeployEnv(
+            region=self.region,
+            stage=self.stage,
+            vendor=self.vendor,
+        )
+        object.__setattr__(self, "_deploy_env", deploy_env)
+
+    @validator("stage", pre=True)
+    def _validate_stage(cls, value: str) -> Stage:
+        """
+        Try to convert a stage value into a Stage enum.
+        """
+        return Stage(value)
+
+    @validator("vendor", pre=True)
+    def _validate_vendor(cls, value: str) -> Vendor:
+        """
+        Try to convert a vendor value into a Vendor enum.
+        """
+        return Vendor(value)
+
+    @property
+    def deploy_env(self) -> DeployEnv:
+        return self._deploy_env
 
     class Config:
         # Allow env variables to be all uppercase.
@@ -36,17 +82,6 @@ class Config(BaseSettings):
         env_nested_delimiter: str = "__"
         # Only consider env variables that start with the given prefix.
         env_prefix: str = "HELLO_FULL_STACK_"
-
-        secrets_dir: str = os.getenv(
-            f"{env_prefix}SECRETS_DIR_PATH",
-            "/var/run",
-        )
-
-        # Load the yaml config file from the env, or use a default.
-        yaml_config_path: str = os.getenv(
-            f"{env_prefix}YAML_CONFIG_PATH",
-            "/tmp/config.yaml",
-        )
 
         @classmethod
         def customise_sources(
@@ -59,5 +94,5 @@ class Config(BaseSettings):
                 init_settings,
                 env_settings,
                 file_secret_settings,
-                yaml_config_settings_source,
+                YamlConfigSettingsSource(init_settings=init_settings),
             )

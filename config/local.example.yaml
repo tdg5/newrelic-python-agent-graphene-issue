@@ -1,1 +1,4 @@
 message: "Hello, Full Stack!"
+region: local
+stage: local
+vendor: local

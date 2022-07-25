@@ -10,6 +10,7 @@ with open(VERSION_PATH, encoding="utf-8", mode="r") as f:
     VERSION = f.read().strip()
 
 _deps = [
+    "dependency-injector~=4.39.1",
     "fastapi==0.78.0",
     "hypercorn==0.13.2",
     "nm-toolkit~=0.1.5",

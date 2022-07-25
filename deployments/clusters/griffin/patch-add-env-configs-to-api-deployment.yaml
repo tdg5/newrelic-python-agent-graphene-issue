@@ -7,6 +7,12 @@ spec:
         - env:
             - name: HELLO_FULL_STACK_MESSAGE
               value: Hello, Full Stack!
+            - name: HELLO_FULL_STACK_REGION
+              value: us-east-1
+            - name: HELLO_FULL_STACK_STAGE
+              value: prod
+            - name: HELLO_FULL_STACK_VENDOR
+              value: aws
           name: hello-full-stack
 metadata:
   name: hello-full-stack
