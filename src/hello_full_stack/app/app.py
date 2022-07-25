@@ -25,6 +25,7 @@ class App:
 
     def __init__(self, config: Config):
         self._api = None
+        self._container = None
         self.config = config
 
     @property
