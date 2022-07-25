@@ -17,15 +17,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Run quality and unit tests
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip3 install -e .[all]
-          make quality
-          python -m pytest
-
-      - name: Configure AWS ECR credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
@@ -34,6 +26,17 @@ jobs:
           role-to-assume: arn:aws:iam::498127099666:role/prod-cicd-automation
           role-session-name: prod-cicd-automation-github-actions
 
+      - name: Setup pip to allow access to AWS CodeArtifact
+        run: aws codeartifact login --tool pip --domain neural-magic-private --repository nm-py
+
+      - name: Run quality and unit tests
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip3 install -e .[all]
+          make quality
+          python -m pytest
+
       - id: login-ecr
         name: Login to AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
@@ -41,10 +44,9 @@ jobs:
       - name: Build, tag, and push image to AWS ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: hello-full-stack
         run: |
-          docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA" .
-          docker push --all-tags "$ECR_REGISTRY/$ECR_REPOSITORY"
+          bin/docker-build
+          docker push --all-tags "$ECR_REGISTRY/hello-full-stack"
   update-image-refs-and-version:
     name: Update base manifest image to point to new docker image and increment version file.
     needs:

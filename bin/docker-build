@@ -1,5 +1,7 @@
 #/bin/bash
 
+set -e
+
 get_repo_dir () {
   SOURCE="${BASH_SOURCE[0]}"
   # While $SOURCE is a symlink, resolve it
@@ -16,10 +18,32 @@ get_repo_dir () {
 
 REPO_DIR=$(get_repo_dir)
 
-if [ -z "$TAG" ]; then
-  TAG="latest"
+if [ -z "$AWS_CODEARTIFACT_AUTH_TOKEN" ]; then
+  AWS_CODEARTIFACT_AUTH_TOKEN="$($REPO_DIR/bin/aws-codeartifact-auth-token)"
 fi
 
+if [ -z "$HELLO_FULL_STACK_GIT_SHA" ]; then
+  HELLO_FULL_STACK_GIT_SHA="$(git rev-parse HEAD)"
+fi
+
+if [ -z "$HELLO_FULL_STACK_VERSION" ]; then
+  HELLO_FULL_STACK_VERSION="$(cat "$REPO_DIR/VERSION" | tr -d '\n')"
+fi
+
+if [ -n "$ECR_REGISTRY" ]; then
+  ECR_REGISTRY_PREFIX="$ECR_REGISTRY/"
+else
+  ECR_REGISTRY_PREFIX=""
+fi
+
+LATEST_TAG="${ECR_REGISTRY_PREFIX}hello-full-stack:latest"
+SHA_TAG="${ECR_REGISTRY_PREFIX}hello-full-stack:$HELLO_FULL_STACK_GIT_SHA"
+
+
 docker build \
-  -t "hello-full-stack:$TAG" \
+  --build-arg AWS_CODEARTIFACT_AUTH_TOKEN="$AWS_CODEARTIFACT_AUTH_TOKEN" \
+  --build-arg HELLO_FULL_STACK_GIT_SHA="$HELLO_FULL_STACK_GIT_SHA" \
+  --build-arg HELLO_FULL_STACK_VERSION="$HELLO_FULL_STACK_VERSION" \
+  --tag "$LATEST_TAG" \
+  --tag "$SHA_TAG" \
   "$REPO_DIR"

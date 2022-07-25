@@ -3,6 +3,11 @@ bases:
 - ./../base
 kind: Kustomization
 patches:
+- path: ./patch-add-env-configs-to-api-deployment.yaml
+  target:
+    kind: Deployment
+    name: hello-full-stack-api
+    namespace: hello-full-stack
 - path: ./patch-add-external-dns-annotation-to-webservice.yaml
   target:
     kind: Ingress

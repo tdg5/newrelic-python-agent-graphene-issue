@@ -66,7 +66,7 @@ metadata:
     app.kubernetes.io/name: hello-full-stack
     app.kubernetes.io/instance: hello-full-stack
     app.kubernetes.io/version: 1.0.0
-  name: hello-full-stack
+  name: hello-full-stack-api
   namespace: hello-full-stack
 spec:
   replicas: 1
@@ -114,8 +114,7 @@ metadata:
 spec:
   ingressClassName: internal-nginx
   rules:
-  - host: hello-full-stack.griffin.internal.neuralmagic.com
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix

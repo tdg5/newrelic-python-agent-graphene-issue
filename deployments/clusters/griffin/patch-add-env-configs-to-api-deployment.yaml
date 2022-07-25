@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+            - name: HELLO_FULL_STACK_MESSAGE
+              value: Hello, Full Stack!
+          name: hello-full-stack
+metadata:
+  name: hello-full-stack
+  namespace: hello-full-stack

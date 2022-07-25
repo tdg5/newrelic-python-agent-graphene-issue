@@ -12,6 +12,7 @@ with open(VERSION_PATH, encoding="utf-8", mode="r") as f:
 _deps = [
     "fastapi==0.78.0",
     "hypercorn==0.13.2",
+    "nm-toolkit~=0.1.5",
     "pydantic==1.9.1",
     "PyYaml>=~6.0",
 ]
