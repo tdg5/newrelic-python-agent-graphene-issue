@@ -13,7 +13,7 @@ _deps = [
     "dependency-injector~=4.39.1",
     "fastapi==0.78.0",
     "hypercorn==0.13.2",
-    "nm-toolkit~=0.1.5",
+    "nm-toolkit~=0.2.12",
     "pydantic==1.9.1",
     "PyYaml>=~6.0",
 ]
@@ -25,6 +25,7 @@ _dev_deps = [
     "isort==5.8.0",
     "mypy~=0.971",
     "pytest~=6.2.0",
+    "pytest-watch~=4.2.0",
     "types-PyYaml~=6.0",
     "wheel>=0.36.2",
 ]

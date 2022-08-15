@@ -2,8 +2,12 @@ anyio==3.6.1
 appdirs==1.4.4
 attrs==21.4.0
 black==21.5b2
+certifi==2022.6.15
+charset-normalizer==2.1.0
 click==8.0.4
+colorama==0.4.5
 dependency-injector==4.39.1
+docopt==0.6.2
 fastapi==0.78.0
 flake8==3.9.2
 h11==0.13.0
@@ -17,7 +21,7 @@ isort==5.8.0
 mccabe==0.6.1
 mypy==0.971
 mypy-extensions==0.4.3
-nm-toolkit==0.1.5
+nm-toolkit==0.2.12
 packaging==21.3
 pathspec==0.9.0
 pluggy==1.0.0
@@ -28,8 +32,10 @@ pydantic==1.9.1
 pyflakes==2.3.1
 pyparsing==3.0.9
 pytest==6.2.5
+pytest-watch==4.2.0
 PyYAML==6.0
 regex==2022.7.9
+requests==2.28.1
 six==1.16.0
 sniffio==1.2.0
 starlette==0.19.1
@@ -37,4 +43,6 @@ toml==0.10.2
 tomli==2.0.1
 types-PyYAML==6.0.11
 typing_extensions==4.3.0
+urllib3==1.26.11
+watchdog==2.1.9
 wsproto==1.1.0
