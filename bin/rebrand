@@ -1,0 +1,77 @@
+#!/bin/bash
+
+set -e
+
+# Rebrand this app with a new name
+
+get_repo_dir () {
+  SOURCE="${BASH_SOURCE[0]}"
+  # While $SOURCE is a symlink, resolve it
+  while [ -h "$SOURCE" ]; do
+       DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+       SOURCE="$( readlink "$SOURCE" )"
+       # If $SOURCE was a relative symlink (so no "/" as prefix, need to resolve
+       # it relative to the symlink base directory
+       [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+  done
+  DIR="$( cd -P "$( dirname "$SOURCE" )/.." && pwd )"
+  echo "$DIR"
+}
+
+REPO_DIR=$(get_repo_dir)
+
+echo -n "Enter snake_case_name: "
+read SNAKE_CASE_NAME
+
+DEFAULT_SCREAMING_SNAKE_CASE_NAME="$(echo "$SNAKE_CASE_NAME" | tr '[:lower:]' '[:upper:]')"
+echo -n "Enter SCREAMING_SNAKE_CASE_NAME (default: $DEFAULT_SCREAMING_SNAKE_CASE_NAME): "
+read SCREAMING_SNAKE_CASE_NAME
+if [ -z "$SCREAMING_SNAKE_CASE_NAME" ]; then
+  SCREAMING_SNAKE_CASE_NAME="$DEFAULT_SCREAMING_SNAKE_CASE_NAME"
+fi
+
+DEFAULT_KEBAB_CASE_NAME="$(echo "$SNAKE_CASE_NAME" | tr '_' '-')"
+echo -n "Enter kebab-case-name (default: $DEFAULT_KEBAB_CASE_NAME): "
+read KEBAB_CASE_NAME
+if [ -z "$KEBAB_CASE_NAME" ]; then
+  KEBAB_CASE_NAME="$DEFAULT_KEBAB_CASE_NAME"
+fi
+
+DEFAULT_TITLE_CASE_NAME="$(echo "$SNAKE_CASE_NAME" | tr '_' ' ' | sed 's/.*/\L&/; s/[a-z]*/\u&/g')"
+echo -n "Enter kebab-case-name (default: $DEFAULT_TITLE_CASE_NAME): "
+read TITLE_CASE_NAME
+if [ -z "$TITLE_CASE_NAME" ]; then
+  TITLE_CASE_NAME="$DEFAULT_TITLE_CASE_NAME"
+fi
+
+cd "$REPO_DIR"
+
+# Replace all snake_case_names
+git grep -Ilz hello_full_stack | \
+  grep -z -v 'bin/rebrand' | \
+  xargs -I{} -n1 -0 sed -i "s/hello_full_stack/$SNAKE_CASE_NAME/g" {}
+
+# Replace all SCREAMING_SNAKE_CASE_NAMES
+git grep -Ilz HELLO_FULL_STACK | \
+  grep -z -v 'bin/rebrand' | \
+  xargs -I{} -n1 -0 sed -i "s/HELLO_FULL_STACK/$SCREAMING_SNAKE_CASE_NAME/g" {}
+
+# Replace all kebab-case-names
+git grep -Ilz hello-full-stack | \
+  grep -z -v 'bin/rebrand' | \
+  xargs -I{} -n1 -0 sed -i "s/hello-full-stack/$KEBAB_CASE_NAME/g" {}
+
+# Replace all title case names
+git grep -Ilz 'Hello Full Stack' | \
+  grep -z -v 'bin/rebrand' | \
+  xargs -I{} -n1 -0 sed -i "s/Hello Full Stack/$TITLE_CASE_NAME/g" {}
+
+git add -u
+git commit -m "Rebrand to $SNAKE_CASE_NAME"
+
+for FILE_TO_RENAME in $(find -name hello_full_stack); do
+  FILE_TO_RENAME_NEW_NAME="$(echo "$FILE_TO_RENAME" | sed "s/hello_full_stack/$SNAKE_CASE_NAME/g")"
+  git mv "$FILE_TO_RENAME" "$FILE_TO_RENAME_NEW_NAME"
+done
+
+git commit --amend --no-edit
