@@ -6,7 +6,7 @@ spec:
       containers:
         - env:
             - name: HELLO_FULL_STACK_MESSAGE
-              value: Hello, Full Stack!
+              value: Hello Full Stack!
             - name: HELLO_FULL_STACK_REGION
               value: us-east-1
             - name: HELLO_FULL_STACK_STAGE

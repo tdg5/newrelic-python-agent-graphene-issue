@@ -64,7 +64,7 @@ setup(
     version=VERSION,
     author="Neuralmagic, Inc.",
     author_email="support@neuralmagic.com",
-    description=("Fullstack example and template repo."),
+    description=("Hello Full Stack"),
     long_description=_setup_long_description()[0],
     long_description_content_type=_setup_long_description()[1],
     keywords="[TODO]",
