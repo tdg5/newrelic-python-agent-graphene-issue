@@ -57,6 +57,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: hello-full-stack
+          token: ${{ secrets.CICD_GITHUB_PAT }}
 
       - name: Checkout private NM github-actions
         uses: actions/checkout@v3
