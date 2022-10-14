@@ -13,7 +13,7 @@ _deps = [
     "dependency-injector~=4.39.1",
     "fastapi==0.78.0",
     "hypercorn==0.13.2",
-    "nm-toolkit~=0.2.12",
+    "nm-toolkit==1.0.2",
     "pydantic==1.9.1",
     "PyYaml>=~6.0",
 ]

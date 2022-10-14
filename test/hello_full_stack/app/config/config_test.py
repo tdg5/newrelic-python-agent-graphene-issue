@@ -13,7 +13,7 @@ from pydantic import ValidationError
 
 from hello_full_stack.app.app_mode import AppMode
 from hello_full_stack.app.config import Config
-from nm_toolkit.deploy_env import DeployEnv, Stage, Vendor  # type: ignore[import]
+from nm_toolkit.service_foundation.deploy_env import DeployEnv, Stage, Vendor
 from test_helpers.locks import env_mutator
 
 

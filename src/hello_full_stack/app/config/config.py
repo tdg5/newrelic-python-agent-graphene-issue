@@ -5,7 +5,7 @@ Config for the application.
 from pydantic import validator
 
 from hello_full_stack.app.app_mode import AppMode
-from nm_toolkit.app_config import AppConfig, AppTargetEnvConfig  # type: ignore[import]
+from nm_toolkit.service_foundation.app_config import AppConfig, AppTargetEnvConfig
 
 
 class Config(AppConfig):
