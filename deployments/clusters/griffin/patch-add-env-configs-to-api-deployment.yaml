@@ -5,6 +5,8 @@ spec:
     spec:
       containers:
         - env:
+            - name: HELLO_FULL_STACK_APP_MODE
+              value: api
             - name: HELLO_FULL_STACK_MESSAGE
               value: Hello Full Stack!
             - name: HELLO_FULL_STACK_REGION

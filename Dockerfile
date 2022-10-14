@@ -13,8 +13,6 @@ COPY ./requirements.txt /tmp/requirements.txt
 
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-COPY ./hypercorn_conf.py /tmp/hypercorn_conf.py
-
 COPY ./src /app
 
 ENV PYTHONPATH=/app
@@ -23,6 +21,6 @@ ENV HELLO_FULL_STACK_GIT_SHA=${HELLO_FULL_STACK_GIT_SHA}
 ENV HELLO_FULL_STACK_NAME='hello-full-stack'
 ENV HELLO_FULL_STACK_VERSION=${HELLO_FULL_STACK_VERSION}
 
-ENTRYPOINT ["hypercorn"]
+ENTRYPOINT ["python"]
 
-CMD ["--config", "file:/tmp/hypercorn_conf.py", "hello_full_stack.entry:api"]
+CMD ["-m", "hello_full_stack.entry"]

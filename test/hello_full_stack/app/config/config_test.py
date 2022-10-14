@@ -11,11 +11,13 @@ from typing import Optional
 import pytest
 from pydantic import ValidationError
 
+from hello_full_stack.app.app_mode import AppMode
 from hello_full_stack.app.config import Config
 from nm_toolkit.deploy_env import DeployEnv, Stage, Vendor  # type: ignore[import]
 from test_helpers.locks import env_mutator
 
 
+DEFAULT_APP_MODE = AppMode.API.value
 DEFAULT_GIT_SHA = "some-git-sha"
 DEFAULT_NAME = "some-name"
 DEFAULT_MESSAGE = "some-message"
@@ -31,6 +33,7 @@ DEFAULT_DEPLOY_ENV = DeployEnv(
 )
 
 YAML_TEMPLATE = """
+app_mode: {app_mode}
 git_sha: {git_sha}
 message: {message}
 name: {name}
@@ -39,6 +42,21 @@ stage: {stage}
 vendor: {vendor}
 version: {version}
 """
+
+
+def test_app_mode_is_accessible():
+    app_mode = "api"
+    subject = make_config(app_mode=app_mode)
+    assert subject.app_mode == AppMode(app_mode)
+
+
+def test_app_mode_is_required():
+    with pytest.raises(ValueError) as exinfo:
+        make_config(app_mode=None)  # type: ignore[arg-type]
+    ex_str = str(exinfo.value)
+    assert ValueError == exinfo.type
+    assert "AppMode" in ex_str
+    assert "None is not a valid AppMode" in ex_str
 
 
 def test_message_is_accessible():
@@ -126,6 +144,7 @@ def test_sources_all_work_and_override_as_expected():
 
 
 def make_config(
+    app_mode: str = DEFAULT_APP_MODE,
     git_sha: str = DEFAULT_GIT_SHA,
     message: str = DEFAULT_MESSAGE,
     name: str = DEFAULT_NAME,
@@ -136,6 +155,7 @@ def make_config(
     yaml_config_path: Optional[str] = DEFAULT_YAML_CONFIG_PATH,
 ) -> Config:
     return Config(
+        app_mode=AppMode(app_mode),
         git_sha=git_sha,
         message=message,
         name=name,
@@ -148,6 +168,7 @@ def make_config(
 
 
 def make_config_yaml(
+    app_mode: str = DEFAULT_APP_MODE,
     git_sha: str = DEFAULT_GIT_SHA,
     message: str = DEFAULT_MESSAGE,
     name: str = DEFAULT_NAME,
@@ -157,6 +178,7 @@ def make_config_yaml(
     version: str = DEFAULT_VERSION,
 ) -> str:
     return YAML_TEMPLATE.format(
+        app_mode=app_mode,
         git_sha=git_sha,
         name=name,
         message=message,

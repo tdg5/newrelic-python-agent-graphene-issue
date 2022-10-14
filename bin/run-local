@@ -16,13 +16,19 @@ get_repo_dir () {
 
 REPO_DIR=$(get_repo_dir)
 
+if [ -z "$APP_MODE" ]; then
+  echo "WARNING: No APP_MODE specified. Assuming 'api'."
+  export APP_MODE="api"
+fi
+
 if [ -z "$YAML_CONFIG_PATH" ]; then
   echo "WARNING: Using config/local.example.yaml config. This probably won't work."
   YAML_CONFIG_PATH="$REPO_DIR/config/local.example.yaml"
 fi
 
+export HELLO_FULL_STACK_APP_MODE=$APP_MODE
 export HELLO_FULL_STACK_GIT_SHA=$(git rev-parse HEAD)
 export HELLO_FULL_STACK_VERSION=$(cat "$REPO_DIR/VERSION" | tr -d '\n')
 export HELLO_FULL_STACK_YAML_CONFIG_PATH="$YAML_CONFIG_PATH"
 
-hypercorn -c "file:$REPO_DIR/hypercorn_conf.py" hello_full_stack.entry:api
+python -m hello_full_stack.entry

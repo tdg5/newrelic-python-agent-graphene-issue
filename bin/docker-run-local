@@ -20,12 +20,18 @@ if [ -z "$TAG" ]; then
   TAG="latest"
 fi
 
+if [ -z "$APP_MODE" ]; then
+  echo "WARNING: No APP_MODE specified. Assuming 'api'."
+  export APP_MODE="api"
+fi
+
 if [ -z "$YAML_CONFIG_PATH" ]; then
   echo "WARNING: Using config/local.example.yaml config. This probably won't work."
   YAML_CONFIG_PATH="/app/config/local.example.yaml"
 fi
 
 docker run \
+  --env "HELLO_FULL_STACK_APP_MODE=$APP_MODE" \
   --env "HELLO_FULL_STACK_YAML_CONFIG_PATH=$YAML_CONFIG_PATH" \
   --interactive \
   --publish 8000:8000 \
