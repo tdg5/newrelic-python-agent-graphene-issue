@@ -11,7 +11,7 @@ config: Config = Config()
 app: App = boot(config=config)
 
 if config.app_mode == AppMode.API:
-    from hello_full_stack.entry_points.webserver import webserver
+    from hello_full_stack.entry_points.api import webserver
 
     webserver.run(app.api)
 else:
