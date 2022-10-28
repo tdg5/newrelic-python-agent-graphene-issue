@@ -63,7 +63,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: neuralmagic/github-actions
-          ref: v0.2.5
+          ref: v0.3.1
           path: .github/actions/nm-github-actions
           token: ${{ secrets.CICD_GITHUB_PAT }}
 
@@ -83,11 +83,15 @@ jobs:
           filePaths: |-
             ./deployments/clusters/base/kustomization.yaml
           repoPath: hello-full-stack
+          userEmail: automation@neuralmagic.com
+          userName: nm-automation
 
       - name: Update version
         uses: ./.github/actions/nm-github-actions/packages/increment-version-action/src
         with:
           commitMessage: '[skip actions] Increment version for next development cycle.'
+          repoPath: hello-full-stack
+          userEmail: automation@neuralmagic.com
+          userName: nm-automation
           versionFilePath: VERSION
           versionFormat: python
-          repoPath: hello-full-stack
