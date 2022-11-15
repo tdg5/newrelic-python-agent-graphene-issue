@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -n "$AWS_PROFILE" ]; then
+  export AWS_PROFILE="$AWS_PROFILE"
+fi
+
+if [ -n "$AWS_REGION" ]; then
+  export AWS_REGION="$AWS_REGION"
+fi
+
+aws codeartifact login \
+  --domain neural-magic-private \
+  --duration-seconds 43200 \
+  --repository nm-py \
+  --tool pip
