@@ -21,6 +21,8 @@ _deps = [
 _dev_deps = [
     "black==21.5b2",
     "click<8.1",
+    "coverage==6.5.0",
+    "coverage-badge==1.1.0",
     "flake8==3.9.2",
     "isort==5.8.0",
     "mypy~=0.971",

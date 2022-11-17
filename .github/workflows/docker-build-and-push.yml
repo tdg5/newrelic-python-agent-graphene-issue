@@ -38,7 +38,9 @@ jobs:
           source venv/bin/activate
           pip3 install -e .[all]
           make quality
-          python -m pytest
+          coverage run -m pytest
+          coverage report
+          coverage-badge -f -o ./.meta/coverage_badge.svg
         working-directory: hello-full-stack
 
       - id: login-ecr
@@ -77,6 +79,16 @@ jobs:
           # Look out! This is a string literal list of file paths since Github actions don't have a list input type
           requiredFilePaths: |-
             ./deployments/clusters/base/kustomization.yaml
+          repoPath: hello-full-stack
+          userEmail: automation@neuralmagic.com
+          userName: nm-automation
+
+      - name: Commit and push code coverage metrics
+        uses: ./.github/actions/nm-github-actions/packages/stage-commit-and-push-action/src
+        with:
+          commitMessage: '[skip actions] Update code coverage metrics'
+          optionalFilePaths: |-
+            ./.meta/coverage_badge.svg
           repoPath: hello-full-stack
           userEmail: automation@neuralmagic.com
           userName: nm-automation

@@ -1,5 +1,8 @@
 # Hello Full Stack
 
+
+![Code Coverage Badge](./.meta/coverage_badge.svg)
+
 ## Introduction and Motivations
 
 Hello and welcome!
@@ -38,6 +41,32 @@ Currently, the general structure of a full stack web application is as follows:
       ingress access to the service through an AWS Elastic Load Balancer to
       better ensure capacity and high availability.
 
+## To set up and run this repo locally
+
+**Recommended Python version: 3.9.0**
+
+Once you have the source code from GIT clone, make sure you have these two clients installed:
+1. Docker from its [official site][docker-official-site].
+2. AWS CLI from its [official site][aws-cli-install-site].
+When you have completed the Docker client and the AWS CLI installation, 
+run the script `bin/aws-codeartifact-login` so that your terminal is authorized to download dependencies from our AWS artifact storage.
+
+Now, with AWS token assigned to your machine, run `bin/docker-build` to generate the docker image for your web service.
+After that, run `bin/docker-run-local` to spin up the web service. If everything went successfully so far, you should be able to visit the service at [http://0.0.0.0:8080](http://0.0.0.0:8080).
+
+# To Run test and see test coverage locally
+Run these commands:
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -e '.[all]'
+coverage run -m pytest
+coverage report
+```
+
+
+[aws-cli-install-site]: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+[docker-official-site]: https://www.docker.com/
 [asyncio-docs]: https://docs.python.org/3/library/asyncio.html "asyncio — Asynchronous I/O"
 [aws-ecr-dev-guide]: https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html "What is Amazon Container Registry?"
 [docker-getting-started]: https://docs.docker.com/get-started/ "Docker - Get Started"
