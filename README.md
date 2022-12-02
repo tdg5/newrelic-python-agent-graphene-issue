@@ -18,6 +18,8 @@ providing a consistent foundation for creating new full stack web applications.
 
 Currently, the general structure of a full stack web application is as follows:
 - A minimal python web service built with
+  - [Dependency Injector][dependency-injector-docs] for the dependency
+    injection framework.
   - [FastAPI][fastapi-docs] for the web framework
   - [hypercorn][hypercorn-docs] for the application server
   - [service_foundation][neural-magic-nm-py-toolkit-service-foundation] for
@@ -69,6 +71,7 @@ coverage report
 [docker-official-site]: https://www.docker.com/
 [asyncio-docs]: https://docs.python.org/3/library/asyncio.html "asyncio — Asynchronous I/O"
 [aws-ecr-dev-guide]: https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html "What is Amazon Container Registry?"
+[dependency-injector-docs]: https://python-dependency-injector.ets-labs.org/ "Dependency Injector — Dependency injection framework for Python"
 [docker-getting-started]: https://docs.docker.com/get-started/ "Docker - Get Started"
 [fastapi-docs]: https://fastapi.tiangolo.com/ "FastAPI"
 [github-actions-docs]: https://docs.github.com/en/actions "GitHub.com - Actions"
