@@ -50,7 +50,7 @@ Currently, the general structure of a full stack web application is as follows:
 Once you have the source code from GIT clone, make sure you have these two clients installed:
 1. Docker from its [official site][docker-official-site].
 2. AWS CLI from its [official site][aws-cli-install-site].
-When you have completed the Docker client and the AWS CLI installation, 
+When you have completed the Docker client and the AWS CLI installation,
 run the script `bin/aws-codeartifact-login` so that your terminal is authorized to download dependencies from our AWS artifact storage.
 
 Now, with AWS token assigned to your machine, run `bin/docker-build` to generate the docker image for your web service.
@@ -65,6 +65,26 @@ pip install -e '.[all]'
 coverage run -m pytest
 coverage report
 ```
+
+## Pre-commit
+This tools helps to keep the code in shape. Worth to know:
+* It will run all checkers one by one.
+* If some was successful or skipped - you will see an according message.
+* Some checkers will automatically fix all issues(black, isort). They will just provide a report on what was done.
+* Some checkers will fail until manual fix.
+* If there is any misspell error - add that work to the `whitelist.txt`
+
+To run the checkers with each commit:
+
+```pre-commit install```
+
+If there is a situation where you don't want to run checkers:
+
+```git commit -m "" --no-verify"```
+
+To run checkers at any time:
+
+```make style```
 
 
 [aws-cli-install-site]: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html

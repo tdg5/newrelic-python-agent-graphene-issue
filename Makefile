@@ -8,10 +8,8 @@ quality:
 	black --check $(CHECKFILES) $(CHECKDIRS);
 	isort --check-only $(CHECKFILES) $(CHECKDIRS);
 	flake8 $(CHECKFILES) $(CHECKDIRS);
-	mypy --check-untyped-defs --namespace-packages --show-error-codes $(CHECKDIRS);
+	mypy $(CHECKDIRS);
 
 # style the code according to accepted standards for the repo
 style:
-	@echo "Running python styling";
-	black $(CHECKFILES) $(CHECKDIRS);
-	isort $(CHECKFILES) $(CHECKDIRS);
+	pre-commit run --all-files -c .pre-commit-config.yaml

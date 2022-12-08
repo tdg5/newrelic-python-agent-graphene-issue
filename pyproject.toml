@@ -1,0 +1,22 @@
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = ['src', 'test']
+exclude = ["*.migrations.*"]
+
+[tool.isort]
+include_trailing_comma = true
+line_length=88
+lines_after_imports = 2
+multi_line_output = 3
+profile = "black"
+sections = ["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]
+use_parentheses = true
+
+[tool.pytest.ini_options]
+norecursedirs="test/test_helpers"
+
+[tool.mypy]
+ignore_missing_imports = true
+check_untyped_defs = true
+exclude = '^(fixtures|.*?\.js|.*?\.json)'

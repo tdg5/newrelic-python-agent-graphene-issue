@@ -2,10 +2,10 @@
 Config for the application.
 """
 
+from nm_toolkit.service_foundation.app_config import AppConfig, AppTargetEnvConfig
 from pydantic import validator
 
 from hello_full_stack.app.app_mode import AppMode
-from nm_toolkit.service_foundation.app_config import AppConfig, AppTargetEnvConfig
 
 
 class Config(AppConfig):
