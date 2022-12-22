@@ -7,6 +7,7 @@ fastapi
 hypercorn
 initializer
 initializers
+liveness
 metaclass
 mutator
 pydantic

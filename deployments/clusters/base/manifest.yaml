@@ -91,11 +91,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /health/livez
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /health/readyz
               port: http
       nodeSelector:
         kubernetes.io/arch: amd64
