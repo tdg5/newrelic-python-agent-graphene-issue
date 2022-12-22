@@ -82,7 +82,7 @@ spec:
     spec:
       serviceAccountName: hello-full-stack
       containers:
-        - name: hello-full-stack
+        - name: hello-full-stack-api
           image: 498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack:latest
           imagePullPolicy: Always
           ports:
