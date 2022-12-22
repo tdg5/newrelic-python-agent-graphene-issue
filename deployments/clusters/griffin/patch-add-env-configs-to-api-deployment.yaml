@@ -15,7 +15,7 @@ spec:
               value: prod
             - name: HELLO_FULL_STACK_VENDOR
               value: aws
-          name: hello-full-stack
+          name: hello-full-stack-api
 metadata:
-  name: hello-full-stack
+  name: hello-full-stack-api
   namespace: hello-full-stack
