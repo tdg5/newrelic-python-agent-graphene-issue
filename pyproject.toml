@@ -1,7 +1,7 @@
 [tool.black]
 line-length = 88
 target-version = ['py39']
-include = ['src', 'test']
+include = ['hello_full_stack', 'hello_full_stack_test']
 exclude = ["*.migrations.*"]
 
 [tool.isort]
@@ -12,9 +12,6 @@ multi_line_output = 3
 profile = "black"
 sections = ["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]
 use_parentheses = true
-
-[tool.pytest.ini_options]
-norecursedirs="test/test_helpers"
 
 [tool.mypy]
 ignore_missing_imports = true

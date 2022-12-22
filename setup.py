@@ -45,7 +45,7 @@ _dev_deps = [
 
 def _setup_packages() -> List:
     return find_packages(
-        "src",
+        "hello_full_stack",
         include=["hello_full_stack"],
         exclude=["*.__pycache__.*"],
     )
@@ -83,7 +83,7 @@ setup(
     license="Apache",
     url="https://github.com/neuralmagic/hello-full-stack",
     package_dir={
-        "": "src",
+        "": "hello_full_stack",
     },
     packages=_setup_packages(),
     extras_require=_setup_extras(),

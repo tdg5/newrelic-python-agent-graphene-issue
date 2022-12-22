@@ -11,13 +11,13 @@ repos:
         name: black
         language: system
         entry: black
-        args: [ "src" , "test" ]
+        args: [ "hello_full_stack" , "hello_full_stack_test" ]
         types: [ python ]
       - id: flake8
         name: flake8
         language: python
         entry: flake8
-        args: [ "src" , "test" ]
+        args: [ "hello_full_stack" , "hello_full_stack_test" ]
         types: [ python ]
         additional_dependencies:
           - flake8-typing-imports
@@ -32,18 +32,18 @@ repos:
         name: Mypy check
         entry: mypy
         language: system
-        args: [ "src" , "test" ]
+        args: [ "hello_full_stack" , "hello_full_stack_test" ]
         pass_filenames: false
       - id: isort
         name: isort
         entry: isort
-        args: [ "src" , "test" ]
+        args: [ "hello_full_stack" , "hello_full_stack_test" ]
         language: system
       - id: removestar
         name: removestar
         language: system
         entry: removestar
-        args: [ "i", "src" , "test" ]
+        args: [ "i", "hello_full_stack" , "hello_full_stack_test" ]
         types: [python]
       - id: safety-production-dependencies-check
         name: Safety production dependencies check

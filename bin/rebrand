@@ -38,7 +38,7 @@ if [ -z "$KEBAB_CASE_NAME" ]; then
 fi
 
 DEFAULT_TITLE_CASE_NAME="$(echo "$SNAKE_CASE_NAME" | tr '_' ' ' | sed 's/.*/\L&/; s/[a-z]*/\u&/g')"
-echo -n "Enter kebab-case-name (default: $DEFAULT_TITLE_CASE_NAME): "
+echo -n "Enter Title Case Name (default: $DEFAULT_TITLE_CASE_NAME): "
 read TITLE_CASE_NAME
 if [ -z "$TITLE_CASE_NAME" ]; then
   TITLE_CASE_NAME="$DEFAULT_TITLE_CASE_NAME"
@@ -66,12 +66,12 @@ git grep -Ilz 'Hello Full Stack' | \
   grep -z -v 'bin/rebrand' | \
   xargs -I{} -n1 -0 sed -i "s/Hello Full Stack/$TITLE_CASE_NAME/g" {}
 
-git add -u
-git commit -m "Rebrand to $SNAKE_CASE_NAME"
-
-for FILE_TO_RENAME in $(find -name hello_full_stack); do
-  FILE_TO_RENAME_NEW_NAME="$(echo "$FILE_TO_RENAME" | sed "s/hello_full_stack/$SNAKE_CASE_NAME/g")"
-  git mv "$FILE_TO_RENAME" "$FILE_TO_RENAME_NEW_NAME"
+for FILE_TO_RENAME in $(find -name 'hello_full_stack*'); do
+  if git ls-files --error-unmatch -- "$FILE_TO_RENAME" &>/dev/null; then
+    FILE_TO_RENAME_NEW_NAME="$(echo "$FILE_TO_RENAME" | sed "s/hello_full_stack/$SNAKE_CASE_NAME/g")"
+    git mv "$FILE_TO_RENAME" "$FILE_TO_RENAME_NEW_NAME"
+  fi
 done
 
-git commit --amend --no-edit
+git add -u
+git commit -m "Rebrand to $SNAKE_CASE_NAME"

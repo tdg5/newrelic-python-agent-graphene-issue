@@ -1,5 +1,5 @@
 CHECKFILES := setup.py
-CHECKDIRS := src test
+CHECKDIRS := hello_full_stack hello_full_stack_test
 
 
 # run checks on all files for the repo

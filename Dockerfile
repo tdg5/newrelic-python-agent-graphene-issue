@@ -13,7 +13,7 @@ COPY ./requirements.txt /tmp/requirements.txt
 
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-COPY ./src /app
+COPY ./hello_full_stack /app/hello_full_stack
 
 ENV PYTHONPATH=/app
 

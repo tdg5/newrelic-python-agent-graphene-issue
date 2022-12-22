@@ -11,10 +11,10 @@ from typing import Optional
 import pytest
 from nm_toolkit.service_foundation.deploy_env import DeployEnv, Stage, Vendor
 from pydantic import ValidationError
-from test_helpers.locks import env_mutator
 
 from hello_full_stack.app.app_mode import AppMode
 from hello_full_stack.app.config import Config
+from hello_full_stack_test.test_helpers.locks import env_mutator
 
 
 DEFAULT_APP_MODE = AppMode.API.value
