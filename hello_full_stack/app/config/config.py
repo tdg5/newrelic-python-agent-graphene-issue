@@ -2,6 +2,8 @@
 Config for the application.
 """
 
+from typing import List
+
 from nm_toolkit.service_foundation.app_config import AppConfig, AppTargetEnvConfig
 from pydantic import validator
 
@@ -14,6 +16,10 @@ class Config(AppConfig):
     """
 
     app_mode: AppMode
+    logging_app_log_level: str = "INFO"
+    logging_format: str = "%(levelname)-8s %(message)s %(name)s.%(funcName)s"
+    logging_handlers: List[str] = ["default"]
+    logging_web_server_log_level: str = "INFO"
     message: str
     name: str
 

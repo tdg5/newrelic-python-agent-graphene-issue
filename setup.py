@@ -15,6 +15,7 @@ _deps = [
     "hypercorn==0.13.2",
     "nm-toolkit==1.0.2",
     "pydantic==1.10.2",
+    "python-json-logger==2.0.4",
     "PyYaml>=~6.0",
 ]
 
