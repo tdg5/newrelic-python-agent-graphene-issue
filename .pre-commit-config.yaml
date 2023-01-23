@@ -11,7 +11,7 @@ repos:
         name: black
         language: system
         entry: black
-        args: [ "hello_full_stack" , "hello_full_stack_test" ]
+        args: ["--experimental-string-processing"]
         types: [ python ]
       - id: flake8
         name: flake8

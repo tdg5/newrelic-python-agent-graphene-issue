@@ -23,7 +23,7 @@ class _ApiInitializer(AbstractInitializer):
     def execute(self, app: App) -> Dict[str, str]:
         api = FastAPI(
             container=app.container,
-            description=("Example/template implementation of an API microservice."),
+            description="Example/template implementation of an API microservice.",
             title="hello-full-stack",
         )
         for router in ROUTERS:
