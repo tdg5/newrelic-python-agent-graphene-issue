@@ -33,6 +33,7 @@ _dev_deps = [
     "flake8==3.9.2",
     "isort==5.8.0",
     "mypy~=0.971",
+    "packaging==21.3",
     "pep8-naming==0.13.2",
     "pre-commit==2.20.0",
     "pytest-watch~=4.2.0",
