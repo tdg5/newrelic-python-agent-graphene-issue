@@ -1,5 +1,4 @@
 bootloader
-conf
 deps
 dirname
 exinfo
