@@ -31,6 +31,6 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip3 install -e .[all]
+          pip install -r requirements.txt
           make quality
           python -m pytest
