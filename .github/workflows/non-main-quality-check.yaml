@@ -4,6 +4,8 @@ on:
     # Only run these quality checks for non-main branches. Quality checks for
     # main are run elsewhere.
     branches-ignore: [main]
+  workflow_dispatch:
+
 jobs:
   quality-check:
     # Permissions needed to get ID token for OIDC auth
