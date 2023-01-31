@@ -65,7 +65,22 @@ jobs:
           token: ${{ secrets.CICD_GITHUB_PAT }}
 
       - name: Install kustomize
-        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+        run: |
+          # This sometimes fails because of github rate limiting, but the
+          # kustomize script doesn't give us any way to authenticate with
+          # github, so all we can do is try the download again.
+          KUSTOMIZE_DOWNLOADED=0
+          while [ $KUSTOMIZE_DOWNLOADED -eq 0 ]; do
+            curl -sO "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"
+            if [ $? -eq 0 ]; then
+              KUSTOMIZE_DOWNLOADED=1
+            else
+              echo -n "."
+              sleep 2
+            fi
+          done
+          bash install_kustomize.sh
+          rm install_kustomize.sh
 
       - name: Update base manifest image to point to new docker image
         run: |-
