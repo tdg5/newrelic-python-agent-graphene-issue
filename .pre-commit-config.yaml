@@ -65,7 +65,7 @@ repos:
         exclude: factories.py
       - id: requirements-txt-fixer
       - id: check-yaml
-        exclude: deployments/clusters/base/manifest.yaml
+        args: ['--allow-multiple-documents']
       - id: check-toml
       - id: check-json
       - id: check-case-conflict
