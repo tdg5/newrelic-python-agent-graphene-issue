@@ -97,6 +97,10 @@ spec:
             httpGet:
               path: /health/readyz
               port: http
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128M
       nodeSelector:
         kubernetes.io/arch: amd64
         kubernetes.io/os: linux
