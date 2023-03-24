@@ -4,4 +4,4 @@ resources:
 - ./manifest.yaml
 images:
 - name: 498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack
-  newTag: 54caa6dcf3b15b1b890dacc8925950016a048e7a
+  newTag: 886d75cbddc87446e023c8eaa37aa27b4ca924e8
