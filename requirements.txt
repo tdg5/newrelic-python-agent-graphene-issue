@@ -16,7 +16,7 @@ dlint==0.13.0
 docopt==0.6.2
 dparse==0.6.2
 eradicate==2.1.0
-fastapi==0.94.1
+fastapi==0.95.0
 filelock==3.9.0
 flake8==3.9.2
 flake8-comprehensions==3.10.1

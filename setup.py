@@ -11,7 +11,7 @@ with open(VERSION_PATH, encoding="utf-8", mode="r") as f:
 
 _deps = [
     "dependency-injector~=4.39.1",
-    "fastapi==0.94.1",
+    "fastapi==0.95.0",
     "hypercorn==0.13.2",
     "nm-toolkit==2.0.0",
     "pydantic==1.10.2",
