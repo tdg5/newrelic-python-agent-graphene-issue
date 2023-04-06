@@ -1,0 +1,6 @@
+creation_rules:
+  # prod-aws-us-east-1-griffin
+  - aws_profile: "argocd"
+    encrypted_regex: "^(data|stringData)$"
+    kms: "arn:aws:kms:us-east-1:498127099666:key/f117bf24-7758-4598-be24-51c2b8c03020"
+    path_regex: ".*/griffin/secret(s)?(-.*)?\\.yaml"

@@ -15,6 +15,15 @@ spec:
               value: prod
             - name: HELLO_FULL_STACK_VENDOR
               value: aws
+
+            - name: NEW_RELIC_APP_NAME
+              value: "hello-full-stack"
+            - name: NEW_RELIC_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: key
+                  name: new-relic-license-key
+                  optional: false
           name: hello-full-stack-api
 metadata:
   name: hello-full-stack-api
