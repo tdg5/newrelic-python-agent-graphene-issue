@@ -35,6 +35,7 @@ isort==5.8.0
 mccabe==0.6.1
 mypy==0.991
 mypy-extensions==0.4.3
+newrelic==8.8.0
 nm-toolkit==2.0.0
 nodeenv==1.7.0
 packaging==21.3

@@ -17,6 +17,7 @@ _deps = [
     "pydantic==1.10.2",
     "python-json-logger==2.0.4",
     "PyYaml~=6.0",
+    "newrelic==8.8.0",
 ]
 
 _dev_deps = [

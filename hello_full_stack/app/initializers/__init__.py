@@ -8,6 +8,7 @@ from hello_full_stack.app.initializers.abstract_initializer import AbstractIniti
 from hello_full_stack.app.initializers.api_initializer import ApiInitializer
 from hello_full_stack.app.initializers.container_initializer import ContainerInitializer
 from hello_full_stack.app.initializers.logger_initializer import LoggerInitializer
+from hello_full_stack.app.initializers.newrelic_initializer import NewrelicInitializer
 
 
 __all__ = [
@@ -20,4 +21,5 @@ INITIALIZERS: List[AbstractInitializer] = [
     LoggerInitializer,
     ContainerInitializer,
     ApiInitializer,
+    NewrelicInitializer,
 ]

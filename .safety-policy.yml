@@ -2,5 +2,5 @@ security:
   continue-on-vulnerability-error: False
   ignore-vulnerabilities:
     51457:
-      expires: '2023-04-01'
+      expires: '2023-05-01'
       reason: Seems to relate to a transient dependency not used by the app in prod.
