@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "8001:8000"
+    environment:
+      NEW_RELIC_LICENSE_KEY: "0dfb1f9bb4e8a17fcfb4f97f227b746cFFFFNRAL"
+      NEW_RELIC_APP_NAME: "Test Project"
+      TEST_PROJ_APP_MODE: "api"
+
+volumes:
+  app-db-data:
+  root-home:

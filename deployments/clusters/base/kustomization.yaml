@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- ./manifest.yaml
-images:
-- name: 498127099666.dkr.ecr.us-east-1.amazonaws.com/hello-full-stack
-  newTag: e5a55fcaf18d999c55e3e00ef98e2f4ea9f2c0eb
