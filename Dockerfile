@@ -20,4 +20,4 @@ RUN poetry install --no-root
 
 COPY backend /app
 
-CMD gunicorn -k uvicorn.workers.UvicornWorker -b :8000 main:app
+CMD gunicorn -k uvicorn.workers.UvicornWorker -b :9000 main:app

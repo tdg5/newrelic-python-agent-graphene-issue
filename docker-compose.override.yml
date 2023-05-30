@@ -10,7 +10,7 @@ services:
       - app-db-data:/var/lib/postgresql/data:cached
 
   backend:
-    command: uvicorn --port 8000 --host 0.0.0.0 --reload main:app
+    command: uvicorn --port 9000 --host 0.0.0.0 --reload main:app
     volumes:
       - ./backend:/app:delegated
       - root-home:/root:delegated

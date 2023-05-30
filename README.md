@@ -26,7 +26,7 @@ docker-compose exec postgres createdb apptest -U postgres
 
 Now you can navigate to the following URLs:
 
-- Backend OpenAPI docs: http://localhost:8000/docs/
+- Backend OpenAPI docs: http://localhost:9000/docs/
 
 ### Step 2: Setup pre-commit hooks and database
 
