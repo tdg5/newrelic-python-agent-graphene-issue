@@ -32,83 +32,83 @@ class User(graphene.ObjectType):
         return f"thing {index}"
 
     @staticmethod
-    async def resolve_thing_one(parent, info):
+    def resolve_thing_one(parent, info):
         return User._resolve_thing(1)
 
     @staticmethod
-    async def resolve_thing_two(parent, info):
+    def resolve_thing_two(parent, info):
         return User._resolve_thing(2)
 
     @staticmethod
-    async def resolve_thing_three(parent, info):
+    def resolve_thing_three(parent, info):
         return User._resolve_thing(3)
 
     @staticmethod
-    async def resolve_thing_four(parent, info):
+    def resolve_thing_four(parent, info):
         return User._resolve_thing(4)
 
     @staticmethod
-    async def resolve_thing_five(parent, info):
+    def resolve_thing_five(parent, info):
         return User._resolve_thing(5)
 
     @staticmethod
-    async def resolve_thing_six(parent, info):
+    def resolve_thing_six(parent, info):
         return User._resolve_thing(6)
 
     @staticmethod
-    async def resolve_thing_seven(parent, info):
+    def resolve_thing_seven(parent, info):
         return User._resolve_thing(7)
 
     @staticmethod
-    async def resolve_thing_eight(parent, info):
+    def resolve_thing_eight(parent, info):
         return User._resolve_thing(8)
 
     @staticmethod
-    async def resolve_thing_nine(parent, info):
+    def resolve_thing_nine(parent, info):
         return User._resolve_thing(9)
 
     @staticmethod
-    async def resolve_thing_ten(parent, info):
+    def resolve_thing_ten(parent, info):
         return User._resolve_thing(10)
 
     @staticmethod
-    async def resolve_thing_eleven(parent, info):
+    def resolve_thing_eleven(parent, info):
         return User._resolve_thing(11)
 
     @staticmethod
-    async def resolve_thing_twelve(parent, info):
+    def resolve_thing_twelve(parent, info):
         return User._resolve_thing(12)
 
     @staticmethod
-    async def resolve_thing_thirteen(parent, info):
+    def resolve_thing_thirteen(parent, info):
         return User._resolve_thing(13)
 
     @staticmethod
-    async def resolve_thing_fourteen(parent, info):
+    def resolve_thing_fourteen(parent, info):
         return User._resolve_thing(14)
 
     @staticmethod
-    async def resolve_thing_fifteen(parent, info):
+    def resolve_thing_fifteen(parent, info):
         return User._resolve_thing(15)
 
     @staticmethod
-    async def resolve_thing_sixteen(parent, info):
+    def resolve_thing_sixteen(parent, info):
         return User._resolve_thing(16)
 
     @staticmethod
-    async def resolve_thing_seventeen(parent, info):
+    def resolve_thing_seventeen(parent, info):
         return User._resolve_thing(17)
 
     @staticmethod
-    async def resolve_thing_eighteen(parent, info):
+    def resolve_thing_eighteen(parent, info):
         return User._resolve_thing(18)
 
     @staticmethod
-    async def resolve_thing_nineteen(parent, info):
+    def resolve_thing_nineteen(parent, info):
         return User._resolve_thing(19)
 
     @staticmethod
-    async def resolve_thing_twenty(parent, info):
+    def resolve_thing_twenty(parent, info):
         return User._resolve_thing(20)
 
 
@@ -116,7 +116,7 @@ class Query(graphene.ObjectType):
     users = graphene.List(User)
 
     @staticmethod
-    async def resolve_users(root, info):
+    def resolve_users(root, info):
         return [
             {
                 "id": "john",
