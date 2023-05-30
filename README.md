@@ -17,13 +17,6 @@ Start a local development instance with docker-compose
 ```bash
 docker-compose up -d
 
-# Run database migration
-docker-compose exec backend alembic upgrade head
-
-# Create database used for testing
-docker-compose exec postgres createdb apptest -U postgres
-```
-
 Now you can navigate to the following URLs:
 
 - Backend OpenAPI docs: http://localhost:9000/docs/
@@ -42,32 +35,6 @@ If you add a dependency, you'll need to rebuild your containers like this:
 
 ```bash
 docker-compose up -d --build
-```
-
-### Database migrations
-
-These two are the most used commands when working with alembic. For more info, follow through [Alembic's tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html).
-
-```bash
-# Auto generate a revision
-docker-compose exec backend alembic revision --autogenerate -m 'message'
-
-# Apply latest changes
-docker-compose exec backend alembic upgrade head
-```
-
-### Backend tests
-
-The `Backend` service uses a hardcoded database named `apptest`. First, ensure that it's created
-
-```bash
-docker-compose exec postgres createdb apptest -U postgres
-```
-
-Then you can run tests with this command:
-
-```bash
-docker-compose run backend pytest --cov --cov-report term-missing
 ```
 
 ### Single docker image

@@ -1,4 +1,4 @@
-exclude: "(frontend/src/generated/|backend/alembic/versions/)"
+exclude: "(frontend/src/generated/)"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
@@ -31,7 +31,7 @@ repos:
         name: isort (python)
         files: backend/
         types: [file, python]
-        args: [-o, alembic, --src, "backend"]
+        args: [--src, "backend"]
       - id: isort
         files: backend/
         name: isort (cython)

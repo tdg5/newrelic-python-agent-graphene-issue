@@ -1,26 +1,17 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:12
-    restart: always
-    env_file:
-      - .env
-    healthcheck:
-      test: pg_isready -U postgres
-      interval: 3s
-      timeout: 2s
-      retries: 3
-
   backend:
     build:
       context: backend
+    command:
+      uvicorn --port 9000 --host 0.0.0.0 --reload main:app
     ports:
       - "9000:9000"
     env_file: .env
-    depends_on:
-      postgres:
-        condition: service_healthy
+    volumes:
+      - ./backend:/app:delegated
+      - root-home:/root:delegated
 
 volumes:
   app-db-data:
