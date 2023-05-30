@@ -1,52 +1,117 @@
 # Sample project
 
-## Features
+1. Setup
 
-- FastAPI
-- SQLAlchemy and Alembic
-- Pre-commit hooks (black, autoflake, isort, flake8, prettier)
-- Github Action
-- Dependabot config
-- Docker images
-
-
-## Step 1: Getting started
-
-Start a local development instance with docker-compose
+Create `.env` file:
 
 ```bash
-docker-compose up -d
-
-Now you can navigate to the following URLs:
-
-- Backend OpenAPI docs: http://localhost:9000/docs/
-
-### Step 2: Setup pre-commit hooks and database
-
-Keep your code clean by using the configured pre-commit hooks. Follow the [instructions here to install pre-commit](https://pre-commit.com/). Once pre-commit is installed, run this command to install the hooks into your git repository:
-
-```bash
-pre-commit install
+cp env-template .env
 ```
 
-### Rebuilding containers
+2. Update `.env` to add value for `NEW_RELIC_LICENSE_KEY`
 
-If you add a dependency, you'll need to rebuild your containers like this:
+3. Run the demo app:
 
 ```bash
-docker-compose up -d --build
+docker-compose build && docker-compose up
 ```
 
-### Single docker image
+4. Send a single request to warm up the app:
 
-There's a monolith/single docker image that uses FastAPI to serve static assets. You can use this image to deploy directly to Heroku, Fly.io or anywhere where you can run a Dockerfile without having to build a complicated setup out of separate frontend and backend images.
+```bash
+curl -H 'Content-Type: application/json' -d '@query.json' http://localhost:9000/graphql
+```
 
-## Recipes
+4. Send lots of requests to app using `apache-bench`:
 
-#### Build and upload docker images to a repository
+```bash
+ab -n 1000 -c 1 -T 'application/json' -p query.json http://localhost:9000/graphql
+```
 
-Configure the [**build-push-action**](https://github.com/marketplace/actions/build-and-push-docker-images) in `.github/workflows/test.yaml`.
+## RESULTS WITHOUT NEW_RELIC_LICENSE_KEY
 
-## Credits
+```
+Server Software:        uvicorn
+Server Hostname:        localhost
+Server Port:            9000
 
-Created with [FastAPI Starter](https://github.com/gaganpreet/fastapi-starter)
+Document Path:          /graphql
+Document Length:        48520 bytes
+
+Concurrency Level:      1
+Time taken for tests:   6.674 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      48667000 bytes
+Total body sent:        405000
+HTML transferred:       48520000 bytes
+Requests per second:    149.84 [#/sec] (mean)
+Time per request:       6.674 [ms] (mean)
+Time per request:       6.674 [ms] (mean, across all concurrent requests)
+Transfer rate:          7121.28 [Kbytes/sec] received
+                        59.26 kb/s sent
+                        7180.54 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     6    7   0.7      7      23
+Waiting:        6    7   0.7      6      22
+Total:          6    7   0.7      7      23
+WARNING: The median and mean for the waiting time are not within a normal deviation
+        These results are probably not that reliable.
+
+Percentage of the requests served within a certain time (ms)
+  50%      7
+  66%      7
+  75%      7
+  80%      7
+  90%      7
+  95%      7
+  98%      7
+  99%      8
+ 100%     23 (longest request)
+```
+
+## RESULTS WITH NEW_RELIC_LICENSE_KEY (OUCH)
+
+```
+Server Software:        uvicorn
+Server Hostname:        localhost
+Server Port:            9000
+
+Document Path:          /graphql
+Document Length:        48520 bytes
+
+Concurrency Level:      1
+Time taken for tests:   96.852 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      48667000 bytes
+Total body sent:        405000
+HTML transferred:       48520000 bytes
+Requests per second:    10.33 [#/sec] (mean)
+Time per request:       96.852 [ms] (mean)
+Time per request:       96.852 [ms] (mean, across all concurrent requests)
+Transfer rate:          490.71 [Kbytes/sec] received
+                        4.08 kb/s sent
+                        494.80 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:    89   97  10.0     91     143
+Waiting:       78   85   9.4     80     122
+Total:         89   97  10.0     91     143
+
+Percentage of the requests served within a certain time (ms)
+  50%     91
+  66%     93
+  75%    105
+  80%    110
+  90%    113
+  95%    115
+  98%    121
+  99%    127
+ 100%    143 (longest request)
+```
