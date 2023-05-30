@@ -2,7 +2,7 @@
 # Uses FastAPI to serve static assets
 # Uses gunicorn as a process manager to run the FastAPI app
 
-FROM python:3.10
+FROM python:3.11
 
 ENV PYTHONUNBUFFERED=1
 
