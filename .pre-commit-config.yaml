@@ -20,7 +20,6 @@ repos:
       - id: autoflake
         args:
           - --in-place
-          - --imports=sqlalchemy,pydantic
         files: backend/
         types: [file, python]
 
