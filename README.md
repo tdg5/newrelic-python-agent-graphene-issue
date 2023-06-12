@@ -1,117 +1,47 @@
-# Sample project
+# newrelic-python-agent-graphene-issue
 
-1. Setup
+## Setup
 
-Create `.env` file:
-
-```bash
-cp env-template .env
-```
-
-2. Update `.env` to add value for `NEW_RELIC_LICENSE_KEY`
-
-3. Run the demo app:
+1. Clone and `docker build`
 
 ```bash
-docker-compose build && docker-compose up
+git clone https://github.com/tdg5/newrelic-python-agent-graphene-issue.git
+cd newrelic-python-agent-graphene-issue
+docker build -t newrelic-python-agent-graphene-issue .
 ```
 
-4. Send a single request to warm up the app:
+2. Test run without `NEW_RELIC_LICENSE_KEY`
 
 ```bash
-curl -H 'Content-Type: application/json' -d '@query.json' http://localhost:9000/graphql
+docker run --rm newrelic-python-agent-graphene-issue
 ```
 
-4. Send lots of requests to app using `apache-bench`:
+Example results from running 10 invocations * 100 queries:
+
+```
+Min.   :0.60
+1st Qu.:0.60
+Median :0.61
+Mean   :0.63
+3rd Qu.:0.61
+Max.   :0.85
+```
+
+3. Test run with `NEW_RELIC_LICENSE_KEY`
 
 ```bash
-ab -n 1000 -c 1 -T 'application/json' -p query.json http://localhost:9000/graphql
+read NEW_RELIC_LICENSE_KEY
+# paste New Relic license key and press enter
+
+docker run --rm --env "NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY" newrelic-python-agent-graphene-issue
 ```
 
-## RESULTS WITHOUT NEW_RELIC_LICENSE_KEY
-
+Example results from running 10 invocations * 100 queries:
 ```
-Server Software:        uvicorn
-Server Hostname:        localhost
-Server Port:            9000
-
-Document Path:          /graphql
-Document Length:        48520 bytes
-
-Concurrency Level:      1
-Time taken for tests:   6.674 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      48667000 bytes
-Total body sent:        405000
-HTML transferred:       48520000 bytes
-Requests per second:    149.84 [#/sec] (mean)
-Time per request:       6.674 [ms] (mean)
-Time per request:       6.674 [ms] (mean, across all concurrent requests)
-Transfer rate:          7121.28 [Kbytes/sec] received
-                        59.26 kb/s sent
-                        7180.54 kb/s total
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0    0   0.0      0       0
-Processing:     6    7   0.7      7      23
-Waiting:        6    7   0.7      6      22
-Total:          6    7   0.7      7      23
-WARNING: The median and mean for the waiting time are not within a normal deviation
-        These results are probably not that reliable.
-
-Percentage of the requests served within a certain time (ms)
-  50%      7
-  66%      7
-  75%      7
-  80%      7
-  90%      7
-  95%      7
-  98%      7
-  99%      8
- 100%     23 (longest request)
-```
-
-## RESULTS WITH NEW_RELIC_LICENSE_KEY (OUCH)
-
-```
-Server Software:        uvicorn
-Server Hostname:        localhost
-Server Port:            9000
-
-Document Path:          /graphql
-Document Length:        48520 bytes
-
-Concurrency Level:      1
-Time taken for tests:   96.852 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      48667000 bytes
-Total body sent:        405000
-HTML transferred:       48520000 bytes
-Requests per second:    10.33 [#/sec] (mean)
-Time per request:       96.852 [ms] (mean)
-Time per request:       96.852 [ms] (mean, across all concurrent requests)
-Transfer rate:          490.71 [Kbytes/sec] received
-                        4.08 kb/s sent
-                        494.80 kb/s total
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0    0   0.0      0       0
-Processing:    89   97  10.0     91     143
-Waiting:       78   85   9.4     80     122
-Total:         89   97  10.0     91     143
-
-Percentage of the requests served within a certain time (ms)
-  50%     91
-  66%     93
-  75%    105
-  80%    110
-  90%    113
-  95%    115
-  98%    121
-  99%    127
- 100%    143 (longest request)
+Min.   :1.580
+1st Qu.:1.623
+Median :1.640
+Mean   :1.677
+3rd Qu.:1.667
+Max.   :2.060
 ```
