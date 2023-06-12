@@ -1,7 +1,8 @@
+import asyncio
+import logging
 import os
 
 import graphene
-from fastapi import FastAPI
 from graphql import graphql
 
 
@@ -160,41 +161,22 @@ QUERY_TEXT = """
 """
 
 
-def create_app():
-    description = "Thing API"
+async def query():
+    thing = await graphql(
+        Schema.graphql_schema,
+        source=QUERY_TEXT,
+    )
+    return thing.data
 
+
+if __name__ == "__main__":
     if os.getenv("NEW_RELIC_LICENSE_KEY"):
         import newrelic.agent
         newrelic.agent.initialize("./newrelic.ini")
 
-    app = FastAPI(
-        title="Thing API",
-        openapi_url="/openapi.json",
-        docs_url="/docs/",
-        description=description,
-        redoc_url=None,
-    )
-
-    @app.post("/graphql")
-    async def post_thing():
-        thing = await graphql(
-            Schema.graphql_schema,
-            source=QUERY_TEXT,
-        )
-        return thing.data
-
-    return app
-
-
-app = create_app()
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        reload=True,
-        port=int("9000"),
-    )
+    # Run many repetitions to try to amortize startup costs
+    repetitions_str = os.getenv("REPETITIONS", "100")
+    repetitions = int(repetitions_str)
+    for index in range(1, repetitions):
+        result = asyncio.run(query())
+        assert result is not None

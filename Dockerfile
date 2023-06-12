@@ -1,12 +1,10 @@
-# This monolith Dockerfile:
-# Uses FastAPI to serve static assets
-# Uses gunicorn as a process manager to run the FastAPI app
+ARG PYTHON_VER=3.10
 
-FROM python:3.10
-
-ENV PYTHONUNBUFFERED=1
+FROM python:${PYTHON_VER} AS base
 
 WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1
 
 # Install Poetry
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=/opt/poetry python && \
@@ -14,10 +12,22 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/inst
     ln -s /opt/poetry/bin/poetry && \
     poetry config virtualenvs.create false
 
-COPY backend/pyproject.toml backend/poetry.lock /app/
+COPY ./pyproject.toml ./poetry.lock* /app/
 
-RUN poetry install --no-root
+RUN poetry install
 
-COPY backend /app
+COPY . /app
 
-CMD gunicorn -k uvicorn.workers.UvicornWorker -b :9000 main:app
+FROM python:3.10-slim
+
+RUN apt-get update && apt-get install -y r-base time
+
+WORKDIR /app
+
+COPY --from=base /app /app
+COPY --from=base /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY --from=base /usr/local/bin /usr/local/bin
+
+ENV NEW_RELIC_LICENSE_KEY="$NEW_RELIC_LICENSE_KEY"
+
+CMD bash /app/benchmark.sh

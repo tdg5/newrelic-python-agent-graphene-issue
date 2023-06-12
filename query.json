@@ -1,3 +1,0 @@
-{
-  "query": "{ users { thingOne thingTwo thingThree thingFour thingFive thingSix thingSeven thingEight thingNine thingTen thingEleven thingTwelve thingThirteen thingFourteen thingFifteen thingSixteen thingSeventeen thingEighteen thingNineteen thingTwenty} }"
-}
