@@ -2,4 +2,4 @@
 
 set -eo pipefail
 
-\time -f %e python -m main
+\time -f %e python -m main 2>&1
