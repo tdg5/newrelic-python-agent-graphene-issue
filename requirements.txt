@@ -1,0 +1,6 @@
+aniso8601==9.0.1
+graphene==3.2.2
+graphql-core==3.2.3
+graphql-relay==3.2.0
+newrelic==8.8.0
+yappi==1.4.0
