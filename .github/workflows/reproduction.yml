@@ -1,0 +1,42 @@
+name: Reproduce performance regression when using newrelic-python-agent and graphql
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  reproduction:
+    name: Reproduce performance regression when using newrelic-python-agent and graphql
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          path: newrelic-python-agent-graphql-issue
+
+      - name: Install dependencies and reproduce regression
+        run: |
+          docker build -t newrelic-python-agent-graphql-issue .
+
+          echo "********************************"
+          echo "BGN: RUN WITHOUT NEW RELIC AGENT"
+          echo "********************************"
+
+          docker run --rm newrelic-python-agent-graphql-issue
+
+          echo "^^^^^^ TEST RUN WALL TIME ^^^^^^"
+          echo "********************************"
+          echo "END: RUN WITHOUT NEW RELIC AGENT"
+          echo "********************************"
+
+          echo "*****************************"
+          echo "BGN: RUN WITH NEW RELIC AGENT"
+          echo "*****************************"
+
+          docker run --rm --env 'NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY}}' newrelic-python-agent-graphql-issue
+
+          echo "^^^^^ TEST RUN WALL TIME ^^^^"
+          echo "*****************************"
+          echo "END: RUN WITH NEW RELIC AGENT"
+          echo "*****************************"
+        working-directory: newrelic-python-agent-graphql-issue

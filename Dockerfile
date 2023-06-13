@@ -20,7 +20,7 @@ COPY . /app
 
 FROM python:3.10-slim
 
-RUN apt-get update && apt-get install -y r-base time
+RUN apt-get update && apt-get install -y time
 
 WORKDIR /app
 

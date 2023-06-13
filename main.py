@@ -3,6 +3,7 @@ import os
 
 import graphene
 from graphql import graphql
+import yappi
 
 
 class User(graphene.ObjectType):
@@ -173,9 +174,14 @@ if __name__ == "__main__":
         import newrelic.agent
         newrelic.agent.initialize("./newrelic.ini")
 
+    yappi.set_clock_type("wall")
+    yappi.start()
+
     # Run many repetitions to try to amortize startup costs
-    repetitions_str = os.getenv("REPETITIONS", "100")
+    repetitions_str = os.getenv("REPETITIONS", "1000")
     repetitions = int(repetitions_str)
     for index in range(1, repetitions):
         result = asyncio.run(query())
         assert result is not None
+
+    yappi.get_func_stats().debug_print()
