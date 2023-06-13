@@ -18,25 +18,36 @@ jobs:
         run: |
           docker build -t newrelic-python-agent-graphql-issue .
 
-          echo "********************************"
-          echo "BGN: RUN WITHOUT NEW RELIC AGENT"
-          echo "********************************"
+          echo "***********************************************"
+          echo "*       BGN: RUN WITHOUT NEW RELIC AGENT      *"
+          echo "***********************************************"
 
-          docker run --rm newrelic-python-agent-graphql-issue
+          docker run --rm newrelic-python-agent-graphql-issue > results-without-new-relic.txt
+          tail -1 results-without-new-relic.txt
 
-          echo "^^^^^^ TEST RUN WALL TIME ^^^^^^"
-          echo "********************************"
-          echo "END: RUN WITHOUT NEW RELIC AGENT"
-          echo "********************************"
+          echo "^^^^^^ WITHOUT NEW RELIC AGENT WALL TIME ^^^^^^"
+          echo "***********************************************"
+          echo "*       END: RUN WITHOUT NEW RELIC AGENT      *"
+          echo "***********************************************"
 
-          echo "*****************************"
-          echo "BGN: RUN WITH NEW RELIC AGENT"
-          echo "*****************************"
+          echo "*****************************************"
+          echo "*      BGN: RUN WITH NEW RELIC AGENT    *"
+          echo "*****************************************"
 
-          docker run --rm --env 'NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY}}' newrelic-python-agent-graphql-issue
+          docker run --rm --env 'NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY}}' newrelic-python-agent-graphql-issue > results-with-new-relic.txt
+          tail -1 results-with-new-relic.txt
 
-          echo "^^^^^ TEST RUN WALL TIME ^^^^"
-          echo "*****************************"
-          echo "END: RUN WITH NEW RELIC AGENT"
-          echo "*****************************"
+          echo "^^^^^ WITH NEW RELIC AGENT WALL TIME ^^^^"
+          echo "*****************************************"
+          echo "*      END: RUN WITH NEW RELIC AGENT    *"
+          echo "*****************************************"
+
+          echo "WITHOUT NEW RELIC AGENT YAPPI OUTPUT"
+          echo
+          cat results-without-new-relic.txt
+
+          echo
+          echo "WITHOUT NEW RELIC AGENT YAPPI OUTPUT"
+          echo
+          cat results-with-new-relic.txt
         working-directory: newrelic-python-agent-graphql-issue
