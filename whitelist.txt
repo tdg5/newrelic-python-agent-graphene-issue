@@ -1,9 +1,0 @@
-fastapi
-graphene
-graphene3
-graphql
-newrelic
-openapi
-redoc
-starlette
-uvicorn
